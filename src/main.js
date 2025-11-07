@@ -145,7 +145,11 @@ function init() {
   //scene.background = new THREE.Color( 0xffffff );
   //scene.fog = new THREE.Fog( 0xffffff, 100, 1000 );
 
-  renderer = new THREE.WebGLRenderer();
+  renderer = new THREE.WebGLRenderer( {
+    antialias: true,
+    preserveDrawingBuffer: true,
+    alpha: true,
+  } );
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.setAnimationLoop( animate );
@@ -177,6 +181,16 @@ function init() {
   };
 
   initBirds();
+
+  document.addEventListener( 'keydown', ( event ) => {
+    if ( event.key === 's' ) {
+      const downloadLink = document.createElement( 'a' );
+
+      downloadLink.href = renderer.domElement.toDataURL();
+      downloadLink.download = 'myCanvasImage.png';
+      downloadLink.click();
+    }
+  } );
 
   const gltfloader = new GLTFLoader();
 
