@@ -8,6 +8,8 @@ import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 import { GPUComputationRenderer } from "three/examples/jsm/Addons.js";
 
+import { Loader3DTiles, PointCloudColoring } from 'three-loader-3dtiles';
+
 import emojiFS from "./emojiFS.frag";
 import emojiVS from "./emojiVS.vert";
 import fragmentShaderPosition from "./FragmentShaderPosition.frag";
@@ -15,6 +17,8 @@ import fragmentShaderVelocity from "./FragmentShaderVelocity.frag";
 
 /* TEXTURE WIDTH FOR SIMULATION */
 const WIDTH = 128;
+
+const queryParams = new URLSearchParams( document.location.search );
 
 // Custom Geometry - using 3 triangles each. No UVs, no normals currently.
 class BirdGeometry extends THREE.BufferGeometry {
@@ -131,6 +135,9 @@ let positionUniforms;
 let velocityUniforms;
 let birdUniforms;
 
+let tilesRuntime = null;
+const clock = new THREE.Clock();
+
 init();
 
 function init() {
@@ -138,7 +145,7 @@ function init() {
   container = document.createElement( 'div' );
   document.body.appendChild( container );
 
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 30000 );
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000000 );
   camera.position.z = 350;
 
   scene = new THREE.Scene();
@@ -247,6 +254,44 @@ function init() {
   const light = new THREE.AmbientLight( 0xffffff );
 
   scene.add( light );
+
+  const getViewport = () => {
+    return {
+      width: document.body.clientWidth,
+      height: document.body.clientHeight,
+      devicePixelRatio: window.devicePixelRatio
+    };
+  };
+
+  Loader3DTiles.load( {
+    url: "https://tile.googleapis.com/v1/3dtiles/root.json?key=" + queryParams.get( 'key' ),
+    viewport: getViewport(),
+    options: {
+      dracoDecoderPath: 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco',
+      basisTranscoderPath: 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/basis',
+      pointCloudColoring: PointCloudColoring.RGB,
+      maximumScreenSpaceError: queryParams.get( 'sse' ) ?? 48
+    }
+  } )
+    .then( ( result ) => {
+      const model = result.model;
+      const runtime = result.runtime;
+
+      const demoLat = queryParams.get( 'lat' ) ?? 35.6586;
+      const demoLong = queryParams.get( 'long' ) ?? 139.7454;
+      const demoHeight = queryParams.get( 'height' ) ?? 100;
+
+      tilesRuntime = runtime;
+
+      scene.add( model );
+      scene.add( runtime.getTileBoxes() );
+
+      runtime.orientToGeocoord( {
+        lat: Number( demoLat ),
+        long: Number( demoLong ),
+        height: Number( demoHeight )
+      } );
+    } );
 }
 
 function initComputeRenderer() {
@@ -444,5 +489,10 @@ function render() {
   birdUniforms['textureVelocity'].value = gpuCompute.getCurrentRenderTarget( velocityVariable ).texture;
 
   renderer.render( scene, camera );
+
+  if ( tilesRuntime ) {
+    const dt = clock.getDelta();
+    tilesRuntime.update( dt, camera );
+  }
 
 }
