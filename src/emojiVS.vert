@@ -16,5 +16,5 @@ void main() {
 
     // 2. 基本サイズを距離で割ることで、遠くのものほど小さくする
     // 値は、どのくらい小さくするかを調整する係数
-    gl_PointSize = 8000.0 / distance;
+    gl_PointSize = 6000.0 / distance;
 }
