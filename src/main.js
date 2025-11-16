@@ -163,6 +163,8 @@ function init() {
   container.appendChild( renderer.domElement );
 
   controls = new OrbitControls( camera, container );
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.1;
 
   initComputeRenderer();
 
