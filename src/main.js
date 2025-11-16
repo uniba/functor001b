@@ -146,7 +146,8 @@ function init() {
   document.body.appendChild( container );
 
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000000 );
-  camera.position.z = 50;
+  camera.position.z = 100;
+  camera.position.y = 50;
 
   scene = new THREE.Scene();
   //scene.background = new THREE.Color( 0xffffff );
@@ -281,7 +282,7 @@ function init() {
 
       const demoLat = queryParams.get( 'lat' ) ?? 35.6740679;
       const demoLong = queryParams.get( 'long' ) ?? 139.7108025;
-      const demoHeight = queryParams.get( 'height' ) ?? 120;
+      const demoHeight = queryParams.get( 'height' ) ?? 60;
 
       tilesRuntime = runtime;
 
