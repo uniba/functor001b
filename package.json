@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm i && npx rollup --config --watch",
-    "build": "npm i && npx rullup --config"
+    "build": "npm i && npx rollup --config"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^16.0.3",
