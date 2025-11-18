@@ -147,7 +147,7 @@ function init( container ) {
     multisampling: 8
   } );
   composer.addPass( new RenderPass( scene, camera ) );
-  composer.addPass( new EffectPass( camera, aerialPerspective ) );
+  //composer.addPass( new EffectPass( camera, aerialPerspective ) );
   composer.addPass(
     new EffectPass(
       camera,
