@@ -31,6 +31,9 @@ export class Pigeon {
           this.clockDelta = Date.now() - timestamp;
 
           this.synced = true;
+        } else if ( type == 'ipad' ) {
+          const event = new CustomEvent( "ipad", { detail: body } );
+          document.dispatchEvent( event );
         }
 
         if ( type == 'clientOpen' ) {

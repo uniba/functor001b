@@ -7,7 +7,8 @@ export default {
     'src/landscape.js',
     'src/pa.js',
     'src/atmosphere.js',
-    'src/pigeon-functor.js'
+    'src/pigeon-functor.js',
+    'src/pigeon-receiver.js'
   ],
   output: {
     dir: 'public/assets/js/',

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1,  minimum-scale=1, maximum-scale=1, viewport-fit=cover, width=device-width">
+  </meta>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  </meta>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  </meta>
+  <title>ARJSTEST</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css">
+  </style>
+  <script src="/assets/lib/aframe-v1.7.1.min.js"></script>
+  <script src="/assets/js/pigeon-receiver.js" type="module"></script>
+</head>
+
+<body style="margin : 0px; overflow: hidden;">
+  <a-scene xr-mode-ui="enabled: true">
+
+    <a-box position="0 0.5 -10" material="color: blue;" pigeon-receiver></a-box>
+
+    <a-camera look-controls="enabled: true" fov="73"></a-camera>
+  </a-scene>
+</body>
+
+</html>
