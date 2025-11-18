@@ -109,7 +109,6 @@ function init() {
         console.log( 'wakeLock: ' + `${err.name}, ${err.message}` );
       }
     }
-    console.log( "click" );
   } );
 
   document.addEventListener( 'keydown', ( event ) => {
@@ -119,6 +118,13 @@ function init() {
       downloadLink.href = renderer.domElement.toDataURL();
       downloadLink.download = 'myCanvasImage.png';
       downloadLink.click();
+    } else if ( event.key === 'f' ) {
+      console.log( "full screeeen" );
+      if ( !document.fullscreenElement ) {
+        document.body.requestFullscreen();
+      } else {
+        document.exitFullscreen?.();
+      }
     }
   } );
 
