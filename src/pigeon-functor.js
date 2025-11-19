@@ -2,7 +2,7 @@ import { Pigeon } from "./Pigeon.js";
 
 AFRAME.registerComponent( "pigeon-functor", {
   init() {
-    this.pigeon = new Pigeon( "wss://pigeon-room-dev.deno.dev/pigeon/", 'functor' );
+    this.pigeon = new Pigeon( "wss://vmb207.circuitlab.team:3001/pigeon/", 'functor' );
 
     setInterval( () => {
       const quaternion = new THREE.Quaternion();
@@ -19,7 +19,7 @@ AFRAME.registerComponent( "pigeon-functor", {
           w: quaternion.w,
         }
       } );
-    }, 100 );
+    }, 66 );
 
   },
   tick() {
