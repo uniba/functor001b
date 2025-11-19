@@ -1,0 +1,11 @@
+Model Information:
+* title:	iPad Pro 4th generation (2020) + Apple Pencil
+* source:	https://sketchfab.com/3d-models/ipad-pro-4th-generation-2020-apple-pencil-a74c80a25b2d42dba0f4cd97981f6e05
+* author:	bibelmouse (https://sketchfab.com/bibelmouse)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "iPad Pro 4th generation (2020) + Apple Pencil" (https://sketchfab.com/3d-models/ipad-pro-4th-generation-2020-apple-pencil-a74c80a25b2d42dba0f4cd97981f6e05) by bibelmouse (https://sketchfab.com/bibelmouse) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
