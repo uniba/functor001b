@@ -76,6 +76,7 @@ function init() {
 
   stats = new Stats();
   container.appendChild( stats.dom );
+  stats.dom.style.display = 'none';
 
   container.style.touchAction = 'none';
   container.addEventListener( 'pointermove', onPointerMove );
@@ -140,6 +141,8 @@ function init() {
   gui.add( effectController, 'alignment', 0.0, 100, 0.001 ).onChange( valuesChanger );
   gui.add( effectController, 'cohesion', 0.0, 100, 0.025 ).onChange( valuesChanger );
   gui.add( effectController, 'freedom', 0.0, 100, 0.025 ).onChange( valuesChanger );
+
+  gui.hide();
 
   valuesChanger();
 
