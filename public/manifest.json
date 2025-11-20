@@ -1,11 +1,11 @@
 {
-  "short_name": "ARJSTEST",
-  "name": "ARJSTEST",
+  "short_name": "Hyper Landscape",
+  "name": "Hyper Landscape",
   "display": "standalone",
   "start_url": "index.html",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/assets/images/icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }

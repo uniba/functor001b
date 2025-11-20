@@ -1,11 +1,11 @@
 {
-  "short_name": "Landscape",
-  "name": "Landscape",
+  "short_name": "Functor",
+  "name": "Functor",
   "display": "standalone",
   "start_url": "index.html",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/assets/images/icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }

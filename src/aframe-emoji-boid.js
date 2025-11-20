@@ -40,7 +40,7 @@ AFRAME.registerComponent( "emoji-boid", {
     this.initComputeRenderer();
 
     this.emojitexture = new Image();
-    this.emojitexture.src = "/assets/emoji.png";
+    this.emojitexture.src = "/assets/images/emoji.png";
     this.emojitexture.onload = () => {
       this.initBirds();
       this.ready = true;
