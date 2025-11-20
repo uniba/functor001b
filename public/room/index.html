@@ -20,20 +20,18 @@
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-  <a-scene xr-mode-ui="enabled: false" embedded cursor="rayOrigin: mouse; fuse: false;">
+  <a-scene>
 
     <a-assets>
       <a-asset-item id="room" src="/assets/gltf/pa.glb"></a-asset-item>
       <a-asset-item id="ipad" src="/assets/gltf/ipad.glb"></a-asset-item>
     </a-assets>
 
-    <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 -60 0"></a-entity>
-    <a-entity gltf-model="#ipad" position="0 1.5 -1" scale="0.1 0.1 0.1" pigeon-receiver></a-entity>
+    <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#ipad" position="0 1.55 0" scale="0.1 0.1 0.1" pigeon-receiver></a-entity>
     <a-entity emoji-boid></a-entity>
 
-    <a-entity position="0 -1.5 1">
-      <a-camera look-controls="enabled: false" wasd-controls="enabled: false" orbit-controls="target: 0 1.5 -1; dampingFactor: 0.1; rotateSpeed: 2; zoomSpeed: 2; minDistance: 0.2; maxDistance: 1.2; autoRotate: true; autoRotateSpeed: 1;"></a-camera>
-    </a-entity>
+    <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 1.55 0; minDistance: 0.3; maxDistance: 1.2; initialPosition: 1 2 -1; rotateSpeed: 0.5; enablePan: false;"></a-entity>
   </a-scene>
 </body>
 
