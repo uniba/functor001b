@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
-import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { GLTFLoader, DRACOLoader } from "three/examples/jsm/Addons.js";
 
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 
@@ -51,8 +51,8 @@ function init() {
   document.body.appendChild( container );
 
   camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000000 );
-  camera.position.z = 100;
-  camera.position.y = 50;
+  //camera.position.z = 100;
+  //camera.position.y = 50;
 
   scene = new THREE.Scene();
   //scene.background = new THREE.Color( 0xffffff );
@@ -97,6 +97,17 @@ function init() {
   };
 
   initBirds();
+
+  const gltfloader = new GLTFLoader();
+  const dracoLoader = new DRACOLoader();
+
+  dracoLoader.setDecoderPath( '/assets/gltf/villamoderna.glb' );
+  gltfloader.setDRACOLoader( dracoLoader );
+
+  gltfloader.load( ( gltf ) => {
+    model = gltf.scene;
+    scene.add( model );
+  } );
 
   document.addEventListener( "click", () => {
     if ( navigator.wakeLock ) {
@@ -144,36 +155,6 @@ function init() {
       devicePixelRatio: window.devicePixelRatio
     };
   };
-
-  Loader3DTiles.load( {
-    url: "https://tile.googleapis.com/v1/3dtiles/root.json?key=" + queryParams.get( 'key' ),
-    viewport: getViewport(),
-    options: {
-      dracoDecoderPath: 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/draco',
-      basisTranscoderPath: 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/basis',
-      pointCloudColoring: PointCloudColoring.RGB,
-      maximumScreenSpaceError: queryParams.get( 'sse' ) ?? 48
-    }
-  } )
-    .then( ( result ) => {
-      const model = result.model;
-      const runtime = result.runtime;
-
-      const demoLat = queryParams.get( 'lat' ) ?? 35.6740679;
-      const demoLong = queryParams.get( 'long' ) ?? 139.7108025;
-      const demoHeight = queryParams.get( 'height' ) ?? 60;
-
-      tilesRuntime = runtime;
-
-      scene.add( model );
-      scene.add( runtime.getTileBoxes() );
-
-      runtime.orientToGeocoord( {
-        lat: Number( demoLat ),
-        long: Number( demoLong ),
-        height: Number( demoHeight )
-      } );
-    } );
 }
 
 function initComputeRenderer() {
