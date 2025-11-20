@@ -9,6 +9,8 @@ import fragmentShaderVelocity from "./FragmentShaderVelocitySmall.frag";
 
 AFRAME.registerComponent( "emoji-boid", {
   init() {
+    this.ready = false;
+
     /* TEXTURE WIDTH FOR SIMULATION */
     this.WIDTH = 4;
 
@@ -36,7 +38,13 @@ AFRAME.registerComponent( "emoji-boid", {
     this.clock = new THREE.Clock();
 
     this.initComputeRenderer();
-    this.initBirds();
+
+    this.emojitexture = new Image();
+    this.emojitexture.src = "/assets/emoji.png";
+    this.emojitexture.onload = () => {
+      this.initBirds();
+      this.ready = true;
+    };
   },
   fillPositionTexture( texture ) {
     const theArray = texture.image.data;
@@ -121,11 +129,15 @@ AFRAME.registerComponent( "emoji-boid", {
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'center';
 
-    for ( let i = 0; i < emojis.length; i++ ) {
-      const x = ( i % ATLAS_GRID_WIDTH ) * CELL_SIZE + CELL_SIZE / 2;
-      const y = Math.floor( i / ATLAS_GRID_WIDTH ) * CELL_SIZE + CELL_SIZE / 2;
-      ctx.fillText( emojis[i], x, y );
-    }
+    /*
+      for ( let i = 0; i < emojis.length; i++ ) {
+        const x = ( i % ATLAS_GRID_WIDTH ) * CELL_SIZE + CELL_SIZE / 2;
+        const y = Math.floor( i / ATLAS_GRID_WIDTH ) * CELL_SIZE + CELL_SIZE / 2;
+        ctx.fillText( emojis[i], x, y );
+      }
+    */
+
+    ctx.drawImage( this.emojitexture, 0, 0 );
 
     const atlasTexture = new THREE.CanvasTexture( canvas );
     atlasTexture.needsUpdate = true;
@@ -165,25 +177,27 @@ AFRAME.registerComponent( "emoji-boid", {
     this.el.sceneEl.object3D.add( birds );
   },
   tick() {
-    const now = performance.now();
-    let delta = ( now - this.last ) / 1000;
+    if ( this.ready ) {
+      const now = performance.now();
+      let delta = ( now - this.last ) / 1000;
 
-    if ( delta > 1 ) delta = 1; // safety cap on large deltas
-    this.last = now;
+      if ( delta > 1 ) delta = 1; // safety cap on large deltas
+      this.last = now;
 
-    this.positionUniforms['time'].value = now;
-    this.positionUniforms['delta'].value = delta;
-    this.velocityUniforms['time'].value = now;
-    this.velocityUniforms['delta'].value = delta;
+      this.positionUniforms['time'].value = now;
+      this.positionUniforms['delta'].value = delta;
+      this.velocityUniforms['time'].value = now;
+      this.velocityUniforms['delta'].value = delta;
 
-    this.velocityUniforms['predator'].value.set( 0.5 * this.mouseX / this.windowHalfX, - 0.5 * this.ouseY / this.windowHalfY, 0 );
+      this.velocityUniforms['predator'].value.set( 0.5 * this.mouseX / this.windowHalfX, - 0.5 * this.ouseY / this.windowHalfY, 0 );
 
-    this.mouseX = 10000;
-    this.mouseY = 10000;
+      this.mouseX = 10000;
+      this.mouseY = 10000;
 
-    this.gpuCompute.compute();
+      this.gpuCompute.compute();
 
-    this.birdUniforms['texturePosition'].value = this.gpuCompute.getCurrentRenderTarget( this.positionVariable ).texture;
-    this.birdUniforms['textureVelocity'].value = this.gpuCompute.getCurrentRenderTarget( this.velocityVariable ).texture;
+      this.birdUniforms['texturePosition'].value = this.gpuCompute.getCurrentRenderTarget( this.positionVariable ).texture;
+      this.birdUniforms['textureVelocity'].value = this.gpuCompute.getCurrentRenderTarget( this.velocityVariable ).texture;
+    }
   }
 } );
