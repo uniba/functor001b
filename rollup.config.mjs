@@ -8,7 +8,8 @@ export default {
     'src/pa.js',
     'src/atmosphere.js',
     'src/pigeon-functor.js',
-    'src/pigeon-receiver.js'
+    'src/pigeon-receiver.js',
+    'src/aframe-emoji-boid.js'
   ],
   output: {
     dir: 'public/assets/js/',

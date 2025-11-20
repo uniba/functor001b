@@ -4,24 +4,37 @@ AFRAME.registerComponent( "pigeon-functor", {
   init() {
     this.pigeon = new Pigeon( "wss://vmb207.circuitlab.team:3001/pigeon/", 'functor' );
 
-    setInterval( () => {
-      const quaternion = new THREE.Quaternion();
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    this.w = 0;
+  },
+  tick() {
+    const quaternion = new THREE.Quaternion();
 
-      this.el.object3D.getWorldQuaternion( quaternion );
+    this.el.object3D.getWorldQuaternion( quaternion );
+
+    if (
+      Math.abs( this.x - quaternion.x ) > 0.005 ||
+      Math.abs( this.y - quaternion.y ) > 0.005 ||
+      Math.abs( this.z - quaternion.z ) > 0.005 ||
+      Math.abs( this.w - quaternion.w ) > 0.005
+    ) {
+      this.x = quaternion.x;
+      this.y = quaternion.y;
+      this.z = quaternion.z;
+      this.w = quaternion.w;
 
       this.pigeon.sendMsg( {
         to: 'others',
         type: 'ipad',
         body: {
-          x: quaternion.x,
-          y: quaternion.y,
-          z: quaternion.z,
-          w: quaternion.w,
+          x: this.x,
+          y: this.y,
+          z: this.z,
+          w: this.w,
         }
       } );
-    }, 66 );
-
-  },
-  tick() {
+    }
   }
 } );

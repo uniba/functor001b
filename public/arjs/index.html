@@ -15,6 +15,7 @@
   <script src="/assets/lib/aframe-v1.7.1.min.js"></script>
   <script src="/assets/lib/aframe-ar.js"></script>
   <script src="/assets/js/pigeon-functor.js" type="module"></script>
+  <script src="/assets/js/aframe-emoji-boid.js" type="module"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -24,12 +25,11 @@
     </a-marker>
 
     <a-assets>
-      <a-asset-item id="room" src="/assets/gltf/villamoderna.glb"></a-asset-item>
+      <a-asset-item id="room" src="/assets/gltf/pa.glb"></a-asset-item>
     </a-assets>
 
     <a-entity gltf-model="#room" position="-1, 1.2, 0"></a-entity>
-
-    <a-box position="0 0.5 -10" material="color: blue;"></a-box>
+    <a-entity emoji-boid></a-entity>
 
     <a-camera look-controls="enabled: true" fov="73" pigeon-functor></a-camera>
   </a-scene>
