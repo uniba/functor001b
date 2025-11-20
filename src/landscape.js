@@ -185,8 +185,11 @@ function init() {
     } );
 
   setInterval( () => {
-    velocityUniforms['separationDistance'].value = 19 + ( Math.random() * 2 );
-    velocityUniforms['alignmentDistance'].value = 19 + ( Math.random() * 2 );
+    if ( velocityUniforms['separationDistance'].value == 15 ) {
+      velocityUniforms['separationDistance'].value = 40;
+    } else {
+      velocityUniforms['separationDistance'].value = 15;
+    }
   }, 30000 );
 }
 
