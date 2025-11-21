@@ -25,7 +25,7 @@ AFRAME.registerComponent( "pigeon-functor", {
       this.emojiA.object3D.setRotationFromQuaternion( aq );
       this.emojiA.object3D.position.set( e.detail.a.position.x, e.detail.a.position.y, e.detail.a.position.z );
       this.emojiB.object3D.setRotationFromQuaternion( bq );
-      this.emojiB.object3D.position.set( e.detail.c.position.x, e.detail.b.position.y, e.detail.b.position.z );
+      this.emojiB.object3D.position.set( e.detail.b.position.x, e.detail.b.position.y, e.detail.b.position.z );
       this.emojiC.object3D.setRotationFromQuaternion( cq );
       this.emojiC.object3D.position.set( e.detail.c.position.x, e.detail.c.position.y, e.detail.c.position.z );
       this.emojiD.object3D.setRotationFromQuaternion( dq );
