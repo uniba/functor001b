@@ -14,17 +14,17 @@
   </style>
   <script src="/assets/lib/aframe-v1.7.1.min.js"></script>
   <script src="/assets/lib/aframe-ar.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-orbit-controls@1.3.2/dist/aframe-orbit-controls.min.js"></script>
   <script src="/assets/js/pigeon-functor.js" type="module"></script>
   <script src="/assets/js/aframe-emoji-boid.js" type="module"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-  <a-scene xr-mode-ui="enabled: true" arjs>
-    <a-marker preset="hiro">
-      <a-box position="0 0.5 0" material="color: red;"></a-box>
-    </a-marker>
+  <a-scene background="color: #fff">
 
     <a-assets>
+      <a-asset-item id="ipad" src="/assets/gltf/ipad.glb"></a-asset-item>
       <a-asset-item id="room" src="/assets/gltf/pa.glb"></a-asset-item>
       <img id="emoji1" src="/assets/images/emoji1.png" />
       <img id="emoji2" src="/assets/images/emoji2.png" />
@@ -33,6 +33,8 @@
       <img id="emoji5" src="/assets/images/emoji5.png" />
     </a-assets>
 
+    <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#ipad" position="0 1.55 0" scale="0.1 0.1 0.1" pigeon-receiver></a-entity>
 
     <a-plane id="emojiA" src="#emoji1" height="0.3" width="0.3" position="0 1.75 -1.6" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"></a-plane>
     <a-plane id="emojiB" src="#emoji2" height="0.4" width="0.4" position="0 1.85 0.8" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"></a-plane>
@@ -40,7 +42,7 @@
     <a-plane id="emojiD" src="#emoji4" height="0.4" width="0.4" position="-0.4 1.65 1.1" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"></a-plane>
     <a-plane id="emojiE" src="#emoji5" height="0.3" width="0.3" position="-0.1 2.25 -1" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"></a-plane>
 
-    <a-camera look-controls="enabled: true" position="0 1.55 0" pigeon-functor></a-camera>
+    <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 1.55 0; minDistance: 0.3; maxDistance: 1.2; initialPosition: 1 2 -1; rotateSpeed: 0.5; enablePan: false;" pigeon-functor></a-entity>
   </a-scene>
 </body>
 

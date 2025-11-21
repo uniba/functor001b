@@ -34,6 +34,9 @@ export class Pigeon {
         } else if ( type == 'ipad' ) {
           const event = new CustomEvent( "ipad", { detail: body } );
           document.dispatchEvent( event );
+        } else if ( type == 'emojis' ) {
+          const event = new CustomEvent( "emojis", { detail: body } );
+          document.dispatchEvent( event );
         }
 
         if ( type == 'clientOpen' ) {
