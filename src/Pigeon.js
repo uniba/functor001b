@@ -31,16 +31,24 @@ export class Pigeon {
           this.clockDelta = Date.now() - timestamp;
 
           this.synced = true;
+
+          console.log( "start" );
+          const event = new CustomEvent( "emojistart", { detail: body } );
+          document.dispatchEvent( event );
         } else if ( type == 'ipad' ) {
           const event = new CustomEvent( "ipad", { detail: body } );
-          document.dispatchEvent( event );
-        } else if ( type == 'emojis' ) {
-          const event = new CustomEvent( "emojis", { detail: body } );
           document.dispatchEvent( event );
         }
 
         if ( type == 'clientOpen' ) {
           this.pigeonsSet.add( body.id );
+
+          console.log( "start" );
+
+          setTimeout( () => {
+            const event = new CustomEvent( "emojistart", { detail: body } );
+            document.dispatchEvent( event );
+          }, 5000 );
         }
 
         if ( type == 'clientClose' ) {
