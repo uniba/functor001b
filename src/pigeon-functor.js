@@ -51,7 +51,6 @@ AFRAME.registerComponent( "pigeon-functor", {
       this.z = quaternion.z;
       this.w = quaternion.w;
 
-      /*
       this.pigeon.sendMsg( {
         to: 'others',
         type: 'ipad',
@@ -62,7 +61,6 @@ AFRAME.registerComponent( "pigeon-functor", {
           w: this.w,
         }
       } );
-       */
     }
   }
 } );
