@@ -8,31 +8,33 @@
   </meta>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   </meta>
-  <title>FUNCTOR 001</title>
-  <link rel="manifest" href="/functor/manifest.json" />
-  <link rel="stylesheet" href="/assets/css/functor.css">
+  <title>FUNCTOR 001 Hyper Room</title>
+  <link rel="manifest" href="/room/manifest.json" />
+  <link rel="stylesheet" href="/assets/css/room.css">
   </style>
   <script src="/assets/lib/aframe-v1.7.1.min.js"></script>
-  <script src="/assets/lib/aframe-ar.js"></script>
-  <script src="/assets/js/pigeon-functor-local.js" type="module"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-orbit-controls@1.3.2/dist/aframe-orbit-controls.min.js"></script>
+  <script src="/assets/js/pigeon-receiver-local.js" type="module"></script>
   <script src="/assets/js/aframe-emoji-boid.js" type="module"></script>
   <script src="/assets/js/emoji-starter.js" type="module"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-  <a-scene xr-mode-ui="enabled: true" arjs emoji-starter>
-    <a-marker preset="hiro">
-      <a-box position="0 0.5 0" material="color: red;"></a-box>
-    </a-marker>
+  <a-scene background="color: #fff" emoji-starter>
 
     <a-assets>
       <a-asset-item id="room" src="/assets/gltf/pa.glb"></a-asset-item>
+      <a-asset-item id="ipad" src="/assets/gltf/ipad.glb"></a-asset-item>
       <img id="emoji1" src="/assets/images/emoji1.png" />
       <img id="emoji2" src="/assets/images/emoji2.png" />
       <img id="emoji3" src="/assets/images/emoji3.png" />
       <img id="emoji4" src="/assets/images/emoji4.png" />
       <img id="emoji5" src="/assets/images/emoji5.png" />
     </a-assets>
+
+    <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 0 0"></a-entity>
+    <a-entity gltf-model="#ipad" position="0 1.55 0" scale="0.1 0.1 0.1" pigeon-receiver></a-entity>
 
     <a-entity id="emojiAstage" position="0 1.55 0" animation="property:rotation; dur: 30000; fill: forwards; from: 0, 0, 0; to: 0 360 0; loop: true; easing: linear;startEvents: emojistart;">
       <a-plane src="#emoji1" id="emojiA" height="0.3" width="0.3" position="0 0.2 -1.6" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"
@@ -59,7 +61,7 @@
         animation="property:position; dur: 13000; fill: forwards; from: -0.1 0.7 -1; to: -0.1 0.1 -1; loop: true; dir: alternate; easing: easeInOutSine; startEvents: emojistart;"></a-plane>
     </a-entity>
 
-    <a-camera look-controls="enabled: true" position="0 1.55 0" pigeon-functor></a-camera>
+    <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 1.55 0; minDistance: 0.3; maxDistance: 1.2; initialPosition: 1 2 -1; rotateSpeed: 0.5; enablePan: false;"></a-entity>
   </a-scene>
 </body>
 

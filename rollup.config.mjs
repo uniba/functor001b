@@ -11,6 +11,8 @@ export default {
     'src/pigeon-receiver.js',
     'src/aframe-emoji-boid.js',
     'src/emoji-starter.js',
+    'src/pigeon-functor-local.js',
+    'src/pigeon-receiver-local.js',
   ],
   output: {
     dir: 'public/assets/js/',
