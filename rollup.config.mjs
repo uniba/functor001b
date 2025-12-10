@@ -14,6 +14,8 @@ export default {
     'src/pigeon-functor-local.js',
     'src/pigeon-receiver-local.js',
     'src/webrtc-room-functor.js',
+    'src/canvas-video-stream.js',
+    'src/webrtc-video-display.js',
   ],
   output: {
     dir: 'public/assets/js/',

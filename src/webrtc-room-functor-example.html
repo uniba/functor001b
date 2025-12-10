@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <</html>title>WebRTC</head> Room Functor with Canvas Stream</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-webrtc-component@1.0.0/dist/webrtc-room-functor.js"></script>
+  <script src="https://unpkg.com/aframe-webrtc-component@1.0.0/dist/canvas-video-stream.js"></script>
+  <script src="https://unpkg.com/aframe-webrtc-component@1.0.0/dist/webrtc-video-display.js"></script>
+</head>
+<body>
+  <a-sc</body>ene>
+    <!-- Scene content -->
+    <a-entity position="0 0 -5">
+      <a-box position="0 0 0" color="red"></a-box>
+      <a-sphere position="2 0 0" color="blue"></a-sphere>
+      <a-cylinder position="-2 0 0" color="green"></a-cylinder>
+    </a-entity>
+
+    <!-- WebRTC room with canvas capture -->
+    <a-entity
+      webrtc-room-functor="isRoom: true; captureCanvasStream: true"
+      canvas-video-stream="enabled: true; frameRate: 15">
+    </a-entity>
+
+    <!-- Video display component that uses the WebRTC stream as texture -->
+    <a-entity
+      webrtc-video-display="enabled: true; width: 1.0; height: 1.0; position: 0 0 -2">
+    </a-entity>
+
+    <!-- Camera for viewing the scene -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; z-index: 100;">
+    <h3>WebRTC Canvas</h3> Stream Demo</h3>
+    <p>This example demonstrates:</p>
+    <ul>
+      <li</ul>>WebRTC room functor capturing A-Frame scene as canvas stream</li>
+      <li>Stream made</li> available as #webRtcStream element for texture access</li>
+      <li>Video display</li> component using the WebRTC stream as texture</li>
+    </ul>
+  </div>
+</body>
+</html>

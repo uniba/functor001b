@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <</html>title>A-Frame Canvas</head> Video Stream Example</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-webrtc-component@1.0.0/dist/webrtc-room-functor.js"></script>
+  <script src="https://unpkg.com/aframe-webrtc-component@1.0.0/dist/canvas-video-stream.js"></script>
+</head>
+<body>
+  <a-sc</body>ene>
+    <!-- Scene content -->
+    <a-entity position="0 0 -5">
+      <a-box position="0 0 0" color="red"></a-box>
+      <a-sphere position="2 0 0" color="blue"></a-sphere>
+      <a-cylinder position="-2 0 0" color="green"></a-cylinder>
+    </a-entity>
+
+    <!-- WebRTC component with canvas capture -->
+    <a-entity
+      webrtc-room-functor="isRoom: true; captureCanvasStream: true"
+      canvas-video-stream="enabled: true; frameRate: 15">
+    </a-entity>
+
+    <!-- Camera for viewing the scene -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px;">
+    <h3>Canvas Video</h3> Stream Demo</h3>
+    <p>This example demonstrates capturing A-Frame scene as a video stream.</p>
+    <p></p>Features:</p>
+    <ul>
+      <li>Real</ul>-time</li> rendering of A-Frame scene</li>
+      <li>Canvas</li> capture for WebRTC integration</li>
+      <li>Frame</li> rate control (15fps in this example)</li>
+    </ul>
+  </div>
+</body>
+</html>

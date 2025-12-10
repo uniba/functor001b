@@ -7,7 +7,10 @@ import { Pigeon } from "./Pigeon.js";
 AFRAME.registerComponent("webrtc-room-functor", {
   schema: {
     // Whether this component is for a room or functor
-    isRoom: { type: "boolean", default: false }
+    isRoom: { type: "boolean", default: false },
+
+    // Whether to capture canvas as video stream
+    captureCanvasStream: { type: "boolean", default: false }
   },
 
   init() {
@@ -29,6 +32,8 @@ AFRAME.registerComponent("webrtc-room-functor", {
     this.peerConnection = null;
     this.isRoom = this.data.isRoom;
     this.connectionState = "disconnected";
+    this.canvasStream = null;
+    this.canvasCaptureComponent = null;
 
     // Setup Pigeon message handling to receive WebRTC signaling
     this.setupPigeonHandlers();
@@ -200,6 +205,11 @@ AFRAME.registerComponent("webrtc-room-functor", {
     // If this is a room, initiate the connection
     if (this.isRoom) {
       await this.createAndSendOffer();
+
+      // Set up canvas capture after connection is established
+      if (this.data.captureCanvasStream) {
+        this.setupCanvasCapture();
+      }
     }
 
     console.log("WebRTC connection establishment initiated");
@@ -217,9 +227,102 @@ AFRAME.registerComponent("webrtc-room-functor", {
   },
 
   /**
+   * Add canvas stream to WebRTC connection if available
+   */
+  addCanvasStreamToWebRtc() {
+    if (this.canvasStream && this.peerConnection) {
+      try {
+        // Add the canvas stream as a video track to the peer connection
+        const videoTracks = this.canvasStream.getVideoTracks();
+        if (videoTracks.length > 0) {
+          videoTracks.forEach(track => {
+            this.peerConnection.addTrack(track, this.canvasStream);
+          });
+          console.log("Canvas video stream added to WebRTC connection");
+        }
+      } catch (error) {
+        console.error("Failed to add canvas stream to WebRTC:", error);
+      }
+    }
+  },
+
+  /**
+   * Setup canvas capture component and make stream available for WebRTC
+   */
+  setupCanvasCapture() {
+    // If capture is enabled, try to set up canvas capture
+    if (this.data.captureCanvasStream) {
+      // Check if we have access to canvas capture functionality
+      const scene = this.el.sceneEl;
+
+      // Create a temporary entity to hold canvas capture if needed
+      const captureEntity = document.createElement("a-entity");
+      captureEntity.setAttribute("canvas-video-stream", {
+        enabled: true,
+        captureAsMediaStream: true
+      });
+
+      // Add it to the scene to initialize capture
+      scene.appendChild(captureEntity);
+
+      // Store reference to capture component for later use
+      this.canvasCaptureComponent = captureEntity.components["canvas-video-stream"];
+
+      // When canvas capture is ready, make the stream available
+      if (this.canvasCaptureComponent) {
+        // Try to get the media stream after a short delay to ensure it's ready
+        setTimeout(() => {
+          const mediaStream = this.canvasCaptureComponent.getMediaStream();
+          if (mediaStream) {
+            this.canvasStream = mediaStream;
+
+            // Make the stream available as a DOM element for texture access
+            this.makeStreamAvailableAsTexture(mediaStream);
+
+            // Add to WebRTC connection if connected
+            if (this.peerConnection && this.connectionState === "connected") {
+              this.addCanvasStreamToWebRtc();
+            }
+          }
+        }, 1000);
+      }
+    }
+  },
+
+  /**
+   * Make the MediaStream available as a DOM element that can be used as texture
+   */
+  makeStreamAvailableAsTexture(mediaStream) {
+    // Create a video element to hold the stream, but make it accessible as #webRtcStream
+    const existingVideo = document.getElementById("webRtcStream");
+
+    if (existingVideo) {
+      // Reuse existing video element
+      existingVideo.srcObject = mediaStream;
+    } else {
+      // Create new video element with ID for texture access
+      const videoElement = document.createElement("video");
+      videoElement.id = "webRtcStream";
+      videoElement.srcObject = mediaStream;
+      videoElement.autoplay = true;
+      videoElement.muted = true; // Prevent audio feedback
+      videoElement.style.display = "none"; // Hide the element as it's for texture use
+
+      // Add to scene to ensure proper DOM handling
+      this.el.sceneEl.appendChild(videoElement);
+    }
+  },
+
+  /**
    * Cleanup when component is removed
    */
   remove() {
     this.closeWebRtc();
+
+    // Clean up video element if created
+    const videoElement = document.getElementById("webRtcStream");
+    if (videoElement && videoElement.parentNode) {
+      videoElement.parentNode.removeChild(videoElement);
+    }
   }
 });

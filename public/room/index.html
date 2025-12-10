@@ -19,6 +19,8 @@
   <script src="/assets/js/aframe-emoji-boid.js" type="module"></script>
   <script src="/assets/js/emoji-starter.js" type="module"></script>
   <script src="/assets/js/webrtc-room-functor.js" type="module"></script>
+  <script src="/assets/js/canvas-video-stream.js" type="module"></script>
+  <script src="/assets/js/webrtc-video-display.js" type="module"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -34,7 +36,10 @@
       <img id="emoji5" src="/assets/images/emoji5.png" />
     </a-assets>
 
-    <a-entity webrtc-room-functor="isRoom: true"></a-entity>
+    <a-entity
+      webrtc-room-functor="isRoom: true; captureCanvasStream: true"
+      canvas-video-stream="enabled: true; frameRate: 15">
+    </a-entity>
 
     <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 0 0"></a-entity>
     <a-entity gltf-model="#ipad" position="0 1.55 0" scale="0.1 0.1 0.1" pigeon-receiver></a-entity>
@@ -62,6 +67,12 @@
     <a-entity id="emojiEstage" position="0 1.55 0" animation="property:rotation; dur: 25000; fill: forwards; from: 0, 0, 0; to: 0 360 0; loop: true; easing: linear;startEvents: emojistart;">
       <a-plane src="#emoji5" id="emojiE" height="0.3" width="0.3" position="-0.1 0.7 -1" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"
         animation="property:position; dur: 13000; fill: forwards; from: -0.1 0.7 -1; to: -0.1 0.1 -1; loop: true; dir: alternate; easing: easeInOutSine; startEvents: emojistart;"></a-plane>
+    </a-entity>
+
+    <!-- Video display plane for WebRTC streams -->
+    <a-entity
+      webrtc-video-display="enabled: true; width: 0.4; height: 0.3; position: 0 1.55 0.1; rotation: 0 0 0; opacity: 0.9"
+      id="webRtcVideoPlane">
     </a-entity>
 
     <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 1.55 0; minDistance: 0.3; maxDistance: 1.2; initialPosition: 1 2 -1; rotateSpeed: 0.5; enablePan: false;"></a-entity>
