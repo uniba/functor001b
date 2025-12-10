@@ -17,6 +17,7 @@
   <script src="/assets/js/pigeon-functor.js" type="module"></script>
   <script src="/assets/js/aframe-emoji-boid.js" type="module"></script>
   <script src="/assets/js/emoji-starter.js" type="module"></script>
+  <script src="/assets/js/webrtc-room-functor.js" type="module"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
@@ -33,6 +34,8 @@
       <img id="emoji4" src="/assets/images/emoji4.png" />
       <img id="emoji5" src="/assets/images/emoji5.png" />
     </a-assets>
+
+    <a-entity webrtc-room-functor="isRoom: false"></a-entity>
 
     <a-entity id="emojiAstage" position="0 1.55 0" animation="property:rotation; dur: 30000; fill: forwards; from: 0, 0, 0; to: 0 360 0; loop: true; easing: linear;startEvents: emojistart;">
       <a-plane src="#emoji1" id="emojiA" height="0.3" width="0.3" position="0 0.2 -1.6" rotation="0 0 0" material="transparent: true; side: double; alphaTest: 0.1;"

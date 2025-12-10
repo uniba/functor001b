@@ -13,6 +13,7 @@ export default {
     'src/emoji-starter.js',
     'src/pigeon-functor-local.js',
     'src/pigeon-receiver-local.js',
+    'src/webrtc-room-functor.js',
   ],
   output: {
     dir: 'public/assets/js/',
