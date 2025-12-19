@@ -25,8 +25,8 @@
   <a-scene background="color: #fff" emoji-starter>
 
     <a-assets>
-      <a-asset-item id="room" src="/assets/gltf/pa.glb"></a-asset-item>
-      <a-asset-item id="ipad" src="/assets/gltf/ipad.glb"></a-asset-item>
+      <a-asset-item id="room" src="/assets/gltf/villamoderna.glb"></a-asset-item>
+      <a-asset-item id="iphone" src="/assets/gltf/iphonex.glb"></a-asset-item>
       <img id="emoji1" src="/assets/images/emoji1.png" />
       <img id="emoji2" src="/assets/images/emoji2.png" />
       <img id="emoji3" src="/assets/images/emoji3.png" />
@@ -34,8 +34,8 @@
       <img id="emoji5" src="/assets/images/emoji5.png" />
     </a-assets>
 
-    <a-entity gltf-model="#room" position="0 1.4 -1" rotation="0 0 0"></a-entity>
-    <a-entity gltf-model="#ipad" position="0 1.55 0" scale="0.1 0.1 0.1" pigeon-receiver>
+    <a-entity gltf-model="#room" position="0 1.4 -0.5" rotation="0 -90 0"></a-entity>
+    <a-entity gltf-model="#iphone" position="0 2.2 0" scale="0.001 0.001 0.001" pigeon-receiver>
       <a-video src="#remote_video" width="2.7" height="2.025" position="0 0 0.05" color="#fff"></a-video>
     </a-entity>
 
