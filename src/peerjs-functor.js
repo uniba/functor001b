@@ -25,8 +25,8 @@ AFRAME.registerComponent( "functor-webrtc-sender", {
           // Send messages
           conn.send( 'Hello!' );
 
-          const video = document.querySelector( 'video' );
-          const aframe = document.createElement( 'video' );
+          const video = document.getElementById( 'arjs-video' );
+          const aframe = document.getElementById( 'aframecanvas' );
           const cv = AFRAME.scenes[0].renderer.domElement;
           const mergedCanvas = document.createElement( "canvas" );
           const context = mergedCanvas.getContext( '2d' );
