@@ -38,7 +38,9 @@
     <div style="background-color: purple; color: white;">aframe-video</div>
   </div>
 
-  <a-scene xr-mode-ui="enabled: true" arjs emoji-starter functor-webrtc-sender functor-videotest>
+  <a-scene xr-mode-ui="enabled: true"
+    arjs
+    emoji-starter functor-webrtc-sender functor-videotest>
     <a-marker preset="hiro">
       <a-box position="0 0.5 0" material="color: red;"></a-box>
     </a-marker>
@@ -50,7 +52,7 @@
       <img id="emoji3" src="/assets/images/emoji3.png" />
       <img id="emoji4" src="/assets/images/emoji4.png" />
       <img id="emoji5" src="/assets/images/emoji5.png" />
-      <video autoplay muted playsonline loop="true" src="/assets/video/black.mp4"></video>
+      <video autoplay muted playsinline loop="true" src="/assets/video/black.mp4"></video>
     </a-assets>
 
     <a-entity id="emojiAstage" position="0 1.55 0" animation="property:rotation; dur: 30000; fill: forwards; from: 0, 0, 0; to: 0 360 0; loop: true; easing: linear;startEvents: emojistart;">
