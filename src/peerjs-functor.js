@@ -3,7 +3,24 @@ import "./testvideo.js";
 
 AFRAME.registerComponent( "functor-webrtc-sender", {
   init() {
-    window.addEventListener( 'arjs-video-loaded', function ( event ) {
+    this.rendererHacked = false;
+    this.ready = false;
+
+    window.addEventListener( 'arjs-video-loaded', () => {
+      this.video = document.getElementById( 'arjs-video' );
+      this.mergedCanvas = document.createElement( "canvas", { willReadFrequently: true } );
+      this.context = this.mergedCanvas.getContext( '2d' );
+
+      this.mergedCanvas.width = 200; //this.video.videoWidth;
+      this.mergedCanvas.height = 400; //this.video.videoHeight;
+
+      console.log( "canvas size", this.mergedCanvas.width, this.mergedCanvas.height, this.video.videoWidth, this.video.videoHeight );
+
+      this.stream = this.mergedCanvas.captureStream( 25 );
+
+      const videoelement = document.getElementById( "videoMerged" );
+
+      videoelement.srcObject = this.stream;
 
       const peer = new Peer(
         'functor001b', {
@@ -26,27 +43,7 @@ AFRAME.registerComponent( "functor-webrtc-sender", {
           // Send messages
           conn.send( 'Hello!' );
 
-          const video = document.getElementById( 'arjs-video' );
-          const aframe = document.getElementById( 'aframecanvas' );
-          const cv = AFRAME.scenes[0].renderer.domElement;
-          const mergedCanvas = document.createElement( "canvas" );
-          const context = mergedCanvas.getContext( '2d' );
-
-          aframe.muted = true;
-          aframe.autoplay = true;
-          aframe.srcObject = cv.captureStream( 25 );
-          aframe.play();
-
-          mergedCanvas.width = video.videoWidth;
-          mergedCanvas.height = video.videoHeight;
-
-          setInterval( () => {
-            context.drawImage( video, 0, 0, mergedCanvas.width, mergedCanvas.height );
-            context.drawImage( aframe, 0, 0, mergedCanvas.width, mergedCanvas.height );
-          }, 1000 / 25 );
-
-          const st = mergedCanvas.captureStream( 25 );
-          const call = peer.call( 'functor001broom', st );
+          const call = peer.call( 'functor001broom', this.stream );
 
           call.on( "stream", ( answer ) => {
             console.log( "on stream", answer );
@@ -54,6 +51,26 @@ AFRAME.registerComponent( "functor-webrtc-sender", {
         } );
       } );
 
+      this.ready = true;
     } );
+  },
+  tick() {
+    const renderer = this.el.sceneEl.renderer;
+
+    if ( renderer && !this.rendererHacked ) {
+      const originalRender = renderer.render;
+      const self = this;
+
+      renderer.render = function ( scene, camera ) {
+        originalRender.call( this, scene, camera );
+
+        if ( self.ready ) {
+          self.context.drawImage( self.video, 0, 0, self.mergedCanvas.width, self.mergedCanvas.height );
+          self.context.drawImage( this.domElement, 0, 0, self.mergedCanvas.width, self.mergedCanvas.height );
+        }
+      };
+
+      this.rendererHacked = true;
+    }
   }
 } );
