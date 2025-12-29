@@ -11,8 +11,8 @@ AFRAME.registerComponent( "functor-webrtc-sender", {
       this.mergedCanvas = document.createElement( "canvas", { willReadFrequently: true } );
       this.context = this.mergedCanvas.getContext( '2d' );
 
-      this.mergedCanvas.width = 200; //this.video.videoWidth;
-      this.mergedCanvas.height = 400; //this.video.videoHeight;
+      this.mergedCanvas.width = 480; //this.video.videoWidth;
+      this.mergedCanvas.height = 640; //this.video.videoHeight;
 
       console.log( "canvas size", this.mergedCanvas.width, this.mergedCanvas.height, this.video.videoWidth, this.video.videoHeight );
 
